@@ -23,3 +23,8 @@ Log yang jujur tidak mengurangi nilai, sebanyak apa pun AI dipakai. Yang mengura
 - Prompt: menyelesaikan B1 
 - Dipakai: main.go
 - Diubah: menyelesaikna semua requiremnt
+
+## menyelesaikan B2
+- Prompt: menyelesaikan B2
+- Dipakai: main.go
+- Diubah: menyelesaikna semua requiremnt

@@ -6,7 +6,7 @@
 
 ## Fitur
 - [x] B1 Sumber daya
-- [ ] B2 Buat peminjaman
+- [x] B2 Buat peminjaman
 - [ ] B3 Lihat peminjaman (daftar, filter, detail)
 - [ ] B4 Validasi dan error JSON
 - [ ] B5 Deteksi bentrok (409)
