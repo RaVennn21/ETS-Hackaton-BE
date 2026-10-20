@@ -28,3 +28,8 @@ Log yang jujur tidak mengurangi nilai, sebanyak apa pun AI dipakai. Yang mengura
 - Prompt: menyelesaikan B2
 - Dipakai: main.go
 - Diubah: menyelesaikna semua requiremnt
+
+## menyelesaikan B3
+- Prompt: Cara membuat endpoint melihat daftar dan detail peminjaman dengan filter query
+- Dipakai: handleListPeminjaman dan handleGetPeminjamanByID di main.go
+- Diubah: Menambahkan filter sumber_daya_id, tanggal, status serta validasi error 400 jika sumber_daya_id bukan angka

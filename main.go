@@ -234,6 +234,65 @@ func (s *Server) handleCreatePeminjaman(w http.ResponseWriter, r *http.Request) 
 	writeJSON(w, http.StatusCreated, p)
 }
 
+// Handler GET /peminjaman (Status 200) - Fitur B3: Daftar dengan filter opsional
+func (s *Server) handleListPeminjaman(w http.ResponseWriter, r *http.Request) {
+	q := r.URL.Query()
+	sdIDStr := q.Get("sumber_daya_id")
+	var filterSdID int
+	if sdIDStr != "" {
+		var err error
+		filterSdID, err = strconv.Atoi(sdIDStr)
+		if err != nil {
+			writeError(w, http.StatusBadRequest, "sumber_daya_id harus berupa angka")
+			return
+		}
+	}
+
+	filterTanggal := q.Get("tanggal")
+	filterStatus := q.Get("status")
+
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	res := make([]Peminjaman, 0)
+	for _, p := range s.pinjaman {
+		if sdIDStr != "" && p.SumberDayaID != filterSdID {
+			continue
+		}
+		if filterTanggal != "" && p.Tanggal != filterTanggal {
+			continue
+		}
+		if filterStatus != "" && p.Status != filterStatus {
+			continue
+		}
+		res = append(res, p)
+	}
+
+	writeJSON(w, http.StatusOK, res)
+}
+
+// Handler GET /peminjaman/{id} (Status 200, 400 jika bukan angka, 404 jika tidak ada) - Fitur B3
+func (s *Server) handleGetPeminjamanByID(w http.ResponseWriter, r *http.Request) {
+	idStr := r.PathValue("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		writeError(w, http.StatusBadRequest, "id harus berupa angka")
+		return
+	}
+
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	for _, p := range s.pinjaman {
+		if p.ID == id {
+			writeJSON(w, http.StatusOK, p)
+			return
+		}
+	}
+
+	writeError(w, http.StatusNotFound, "peminjaman tidak ditemukan")
+}
+
 // NewHandler membuat instance Server baru dan mendaftarkan route (wajib ada sesuai syarat ETS)
 func NewHandler() http.Handler {
 	s := &Server{
@@ -248,6 +307,8 @@ func NewHandler() http.Handler {
 	mux.HandleFunc("GET /sumber-daya", s.handleListSumberDaya)
 	mux.HandleFunc("GET /sumber-daya/{id}", s.handleGetSumberDayaByID)
 	mux.HandleFunc("POST /peminjaman", s.handleCreatePeminjaman)
+	mux.HandleFunc("GET /peminjaman", s.handleListPeminjaman)
+	mux.HandleFunc("GET /peminjaman/{id}", s.handleGetPeminjamanByID)
 
 	return mux
 }
