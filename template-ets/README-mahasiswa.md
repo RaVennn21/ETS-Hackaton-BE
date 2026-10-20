@@ -1,11 +1,11 @@
 # PinjamKampus API
 
-- Nama dan NRP:
-- Persona:
+- Nama dan NRP: Oktavian Ramadhan/5053241028
+- Persona: Panitia Acara(Persona D)
 - Cara menjalankan: `go run .` lalu buka http://localhost:8080
 
 ## Fitur
-- [ ] B1 Sumber daya
+- [x] B1 Sumber daya
 - [ ] B2 Buat peminjaman
 - [ ] B3 Lihat peminjaman (daftar, filter, detail)
 - [ ] B4 Validasi dan error JSON

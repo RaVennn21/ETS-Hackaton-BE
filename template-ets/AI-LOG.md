@@ -9,7 +9,17 @@ Log yang jujur tidak mengurangi nilai, sebanyak apa pun AI dipakai. Yang mengura
 - Dipakai: (bagian kode yang kamu ambil, misalnya nama fungsi dan file)
 - Diubah: (apa yang kamu ubah atau perbaiki dari hasil AI, dan kenapa)
 
-## (Entri berikutnya)
-- Prompt:
-- Dipakai:
-- Diubah:
+## Memulai pengerjaan
+- Prompt: Apa yang harus ku lakukan untuk memulai pengerjaan
+- Dipakai: main.go
+- Diubah: menambahkan struct SumberDaya
+
+## Melakukan Setup
+- Prompt: melakukan setup untuk B1
+- Dipakai:main.go
+- Diubah: menambahkan barebone untuk pengerjaan B1,karena saya bingung apa yg harus dilakukan
+
+## menyelesaikan B1
+- Prompt: menyelesaikan B1 
+- Dipakai: main.go
+- Diubah: menyelesaikna semua requiremnt
