@@ -8,11 +8,11 @@
 - [x] B1 Sumber daya
 - [x] B2 Buat peminjaman
 - [x] B3 Lihat peminjaman (daftar, filter, detail)
-- [ ] B4 Validasi dan error JSON
-- [ ] B5 Deteksi bentrok (409)
-- [ ] B6 Ubah dan hapus
-- [ ] B7 Aman untuk permintaan bersamaan
-- [ ] Fitur khas persona
+- [x] B4 Validasi dan error JSON
+- [x] B5 Deteksi bentrok (409)
+- [x] B6 Ubah dan hapus
+- [x] B7 Aman untuk permintaan bersamaan
+- [x] Fitur khas persona
 - [ ] Change request
 
 ## Yang belum selesai
