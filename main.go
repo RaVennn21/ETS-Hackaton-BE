@@ -30,6 +30,9 @@ func NewHandler() http.Handler {
 	mux.HandleFunc("POST /paket-peminjaman", s.handleCreatePaketPeminjaman)
 	mux.HandleFunc("DELETE /paket-peminjaman/{id}", s.handleDeletePaketPeminjaman)
 
+	// Route Change Request A (Dashboard Ringkasan)
+	mux.HandleFunc("GET /ringkasan", s.handleRingkasan)
+
 	return mux
 }
 

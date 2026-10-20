@@ -53,4 +53,6 @@ Data disimpan di memori menggunakan slice di dalam struct `Server`. Slice dipili
 - **Penyebab dan solusi:** Slice Go yang bernilai `nil` secara bawaan di-encode menjadi `null` oleh `json.Marshal`. Solusinya adalah menginisialisasi slice kosong dengan `make([]..., 0)` atau mengembalikan slice kosong explisit saat nil agar respons JSON selalu berbentuk `[]`.
 
 ## 5. Change request
-(Akan diisi setelah lembar change request dibagikan oleh dosen pada menit ke-100.)
+- **Apa yang diminta:** Endpoint `GET /ringkasan?tanggal=YYYY-MM-DD` untuk menyajikan dashboard ringkasan peminjaman harian, total unit slot terpakai, dan rincian per sumber daya (Change Request A).
+- **Bagian kode yang diubah:** Menambahkan fungsi `handleRingkasan` dan struct response di `handlers.go`, serta mendaftarkan route di `main.go`.
+- **Satu keputusan desain yang diambil:** Menggunakan hash map (`peminjamanPerSD`) untuk menghitung frekuensi peminjaman per sumber daya dalam satu kali iterasi slice peminjaman aktif ($O(N)$), lalu memetakan ke seluruh slice `sumberDaya` agar sumber daya yang tidak memiliki peminjaman tetap muncul dengan nilai 0 secara berurutan sesuai ID.

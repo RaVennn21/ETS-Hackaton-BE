@@ -541,3 +541,68 @@ func (s *Server) handleDeletePaketPeminjaman(w http.ResponseWriter, r *http.Requ
 	s.pinjaman = newPinjaman
 	w.WriteHeader(http.StatusNoContent)
 }
+
+// ==========================================
+// 4. CHANGE REQUEST A: DASHBOARD RINGKASAN
+// ==========================================
+
+type PerSumberDayaSummary struct {
+	SumberDayaID     int    `json:"sumber_daya_id"`
+	Nama             string `json:"nama"`
+	JumlahPeminjaman int    `json:"jumlah_peminjaman"`
+}
+
+type RingkasanResponse struct {
+	Tanggal          string                 `json:"tanggal"`
+	JumlahPeminjaman int                    `json:"jumlah_peminjaman"`
+	TotalUnitSlot    int                    `json:"total_unit_slot"`
+	PerSumberDaya    []PerSumberDayaSummary `json:"per_sumber_daya"`
+}
+
+// handleRingkasan: GET /ringkasan?tanggal=YYYY-MM-DD
+func (s *Server) handleRingkasan(w http.ResponseWriter, r *http.Request) {
+	tanggal := strings.TrimSpace(r.URL.Query().Get("tanggal"))
+	if len(tanggal) != 10 {
+		writeError(w, http.StatusBadRequest, "format tanggal harus YYYY-MM-DD")
+		return
+	}
+	if _, err := time.Parse("2006-01-02", tanggal); err != nil {
+		writeError(w, http.StatusBadRequest, "tanggal tidak valid")
+		return
+	}
+
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	jumlahPeminjaman := 0
+	totalUnitSlot := 0
+
+	// Hitung peminjaman per sumber daya pada tanggal tersebut
+	peminjamanPerSD := make(map[int]int)
+	for _, p := range s.pinjaman {
+		if p.Tanggal == tanggal && p.Status == "aktif" {
+			jumlahPeminjaman++
+			slots := p.SlotSelesai - p.SlotMulai + 1
+			totalUnitSlot += p.Jumlah * slots
+			peminjamanPerSD[p.SumberDayaID]++
+		}
+	}
+
+	// per_sumber_daya memuat SEMUA sumber daya terurut menurut id
+	perSD := make([]PerSumberDayaSummary, 0, len(s.sumberDaya))
+	for _, sd := range s.sumberDaya {
+		perSD = append(perSD, PerSumberDayaSummary{
+			SumberDayaID:     sd.ID,
+			Nama:             sd.Nama,
+			JumlahPeminjaman: peminjamanPerSD[sd.ID],
+		})
+	}
+
+	writeJSON(w, http.StatusOK, RingkasanResponse{
+		Tanggal:          tanggal,
+		JumlahPeminjaman: jumlahPeminjaman,
+		TotalUnitSlot:    totalUnitSlot,
+		PerSumberDaya:    perSD,
+	})
+}
+

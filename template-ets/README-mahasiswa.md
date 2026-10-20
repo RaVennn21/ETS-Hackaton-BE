@@ -13,7 +13,7 @@
 - [x] B6 Ubah dan hapus
 - [x] B7 Aman untuk permintaan bersamaan
 - [x] Fitur khas persona
-- [ ] Change request
+- [x] Change request
 
 ## Yang belum selesai
-(Tulis jujur bagian mana yang belum berjalan.)
+Tidak ada. Seluruh fitur B1-B7, Fitur Khas Persona D (Panitia Acara), dan Change Request A telah selesai diimplementasikan dan lulus pengujian.

@@ -63,3 +63,8 @@ Log yang jujur tidak mengurangi nilai, sebanyak apa pun AI dipakai. Yang mengura
 - Prompt: "Buat endpoint POST /paket-peminjaman dan DELETE /paket-peminjaman/{id} secara atomik all-or-nothing"
 - Dipakai: handleCreatePaketPeminjaman dan handleDeletePaketPeminjaman di handlers.go
 - Diubah: Memvalidasi agar satu sumber daya tidak duplikat dalam satu paket, memastikan transaksi atomik (jika 1 item bentrok tolak 409 dan tidak ada ID yang terbuang), serta menghapus seluruh item paket sekaligus pada DELETE
+
+## Change Request A: Dashboard Ringkasan
+- Prompt: "Buat endpoint GET /ringkasan?tanggal=YYYY-MM-DD menghitung total peminjaman, unit slot, dan per sumber daya"
+- Dipakai: handleRingkasan di handlers.go
+- Diubah: Memastikan seluruh sumber daya terdaftar dalam per_sumber_daya meskipun bernilai 0, serta mengembalikan status 400 jika format tanggal tidak valid
